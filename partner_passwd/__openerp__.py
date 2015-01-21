@@ -32,7 +32,9 @@ Adding passwords to partners.
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
     'depends': ['base'],
-    'data': ['partner_view.xml'],
+    'data': [
+    'partner_view.xml',
+    ],
 
     'installable': True,
     
