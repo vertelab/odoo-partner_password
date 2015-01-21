@@ -33,11 +33,11 @@ class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
 
+    service    = fields.Many2one('res.partner.service')
     name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})
     passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]})
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
-<<<<<<< HEAD:partner_passwd/partner_passwd.py
                     help=" * The 'Draft' status is used when the password is editable.\n"
                          " * The 'Sent' status is used when the password has been sent to the user.\n"
                          " * The'Cancelled'status is used when the password has been cancelled.\n")
@@ -81,12 +81,6 @@ class res_partner_passwd(models.Model):
     def cancel_passwd(self):
         self.state='cancel'
         return True
-=======
-                    help=" * The 'Draft' status is used when ....\n"
-                         " * ...\n"
-                         " * ...\n")
-    partner_id = fields.Many2one('res.partner')
->>>>>>> 831fc44972f959d0d4c163b0db91081ee875e496:partner_passwd.py
 
 class res_partner(models.Model):
     _inherit = "res.partner"

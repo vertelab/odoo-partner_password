@@ -1,1 +1,2 @@
 import partner_passwd
+import partner_service
