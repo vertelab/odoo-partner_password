@@ -40,7 +40,7 @@ class res_partner_passwd(models.Model):
                     help=" * The 'Draft' status is used when ....\n"
                          " * ...\n"
                          " * ...\n")
-    partner_id = fields.Many2one('partner')
+    partner_id = fields.Many2one('res.partner')
 
 class res_partner(models.Model):
     _inherit = "res.partner"
