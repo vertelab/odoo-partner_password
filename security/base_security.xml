@@ -18,14 +18,3 @@
         </record>
     </data>
 </openerp>
-
-<record id="delete_cancelled_only" model="ir.rule">
-    <field name="name">Only cancelled passwords may be deleted</field>
-    <field name="model_id" ref="crm.model_res_partner"/>
-    <field name="groups" eval="[(4, refref('base.group_portal'))]"/>
-    <field name="perm_read" eval="0"/>
-    <field name="perm_write" eval="0"/>
-    <field name="perm_create" eval="0"/>
-    <field name="perm_unlink" eval="1" />
-    <field name="domain_force">[('state','=','cancel')]</field>
-</record>
