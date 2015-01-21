@@ -1,6 +1,2 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-partner_passwd_manager,partner password manager,model_partner_passwd,group_manager,1,1,1,1
-session_manager,session manager,model_partner_passwd_session,group_manager,1,1,1,1
-partner_passwd_read_all,partner passwd read all,model_partner_passwd,,1,0,0,0
-session_read_all,session all,model_partner_passwd-session,,1,0,0,0
-
+res_partner_passwd,partner password manager,model_res_partner_passwd,base.group_user,1,1,1,1
