@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="group_manager" model="res.groups">
+            <field name="name">partner_passwd / Manager</field>
+        </record>
+            <record id="only_responsible_can_modify" model="ir.rule">
+            <field name="name">Only responsible to send new password</field>
+            <field name="model_id" ref="model_partner_passwd"/>
+            <field name="groups" eval="[(4, ref('partner_passwd.group_manager'))]"/>
+            <field name="perm_read" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">
+                ['|', ('responsible_id','=',False),
+                      ('responsible_id','=',user.id)]
+        </record>
+    </data>
+</openerp>
+
+<record id="delete_cancelled_only" model="ir.rule">
+    <field name="name">Only cancelled passwords may be deleted</field>
+    <field name="model_id" ref="crm.model_crm_lead"/>
+    <field name="groups" eval="[(4, ref('base.group_sale_manager'))]"/>
+    <field name="perm_read" eval="0"/>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_unlink" eval="1" />
+    <field name="domain_force">[('state','=','cancel')]</field>
+</record>
