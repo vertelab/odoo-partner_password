@@ -13,6 +13,9 @@
 							  <field name="name"/>
 							  <field name="state" invisible="1"/>
 							  <field name="passwd"/>
+							  <button name="send_passwd" states="draft" string="Send password" type="object" class="oe_highlight"/>
+							  <button name="edit_passwd" states="sent" string="Edit password" type="object" class="oe_highlight"/>
+							  <button name="cancel_passwd" states="sent" string="Cancel password" type="object" class="oe_highlight"/>
 							</tree>
 						</field>
 					</page>

@@ -37,10 +37,49 @@ class res_partner_passwd(models.Model):
     passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]})
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
-                    help=" * The 'Draft' status is used when ....\n"
-                         " * ...\n"
-                         " * ...\n")
-    partner_id = fields.Many2one('partner')
+                    help=" * The 'Draft' status is used when the password is editable.\n"
+                         " * The 'Sent' status is used when the password has been sent to the user.\n"
+                         " * The'Cancelled'status is used when the password has been cancelled.\n")
+    partner_id = fields.Many2one('res.partner')
+
+    @api.one
+#    def send_passwd(self, cr, uid, ids, context=None):
+    def send_passwd(self):
+        """ Sends the password to the users mail.
+        """        
+        assert len(self) == 1, 'This option should only be used for a single id at a time.'
+        template = self.env.ref('account.email_template_edi_invoice', False)
+        compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
+        ctx = dict(
+            default_model='account.invoice',        #res.partner
+            default_res_id=self.id,
+            default_use_template=bool(template),
+            default_template_id=template.id,
+            default_composition_mode='comment',
+            mark_invoice_as_sent=True,
+        )
+        self.state='sent'
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form.id, 'form')],
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx,
+        }
+
+    @api.one
+    def edit_passwd(self):
+        self.state='draft'
+        return True
+
+    @api.one
+    def cancel_passwd(self):
+        self.state='cancel'
+        return True
 
 class res_partner(models.Model):
     _inherit = "res.partner"
