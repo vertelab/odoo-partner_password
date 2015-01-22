@@ -34,6 +34,7 @@ Adding passwords to partners.
     'depends': ['base'],
     'data': [
     'partner_view.xml',
+    'security/ir.model.access.csv',
     ],
 
     'installable': True,
