@@ -27,7 +27,9 @@ from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
 
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
@@ -81,6 +83,10 @@ class res_partner_passwd(models.Model):
     def cancel_passwd(self):
         self.state='cancel'
         return True
+        
+    #@api.one
+    def read(self,cr,uid, *args, **kwargs):
+        return super(res_partner_passwd, self).read(cr,uid, *args, **kwargs)
 
 class res_partner(models.Model):
     _inherit = "res.partner"
