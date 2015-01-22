@@ -21,27 +21,48 @@
 
 import itertools
 from lxml import etree
-
+from grampg import PasswordGenerator
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
+import random
+
 
 
 
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
+    
+    def pwGen():
+        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#¤%&/()=?`¡@£$€¥{[]}\±"
+        pw_length = 8
+        password = ""
+        random.seed()
+        for i in range(pw_length):
+            next_index = random.randrange(len(alphabet))
+            password += alphabet[next_index]
+        return password
+        
+    def passwdGen():
+        passwords = (PasswordGenerator().of().between(4, 10, 'letters')
+                                     .at_least(4, 'numbers')
+                                     .length(8)
+                                     .beginning_with('letters')
+                                     .done())
+        return passwords.generate()
 
     service    = fields.Many2one('res.partner.service')
-    name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})
-    passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]})
+    name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})  
+    passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]}, default = passwdGen())
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
                     help=" * The 'Draft' status is used when the password is editable.\n"
                          " * The 'Sent' status is used when the password has been sent to the user.\n"
                          " * The'Cancelled'status is used when the password has been cancelled.\n")
     partner_id = fields.Many2one('res.partner')
+    
 
     @api.one
 #    def send_passwd(self, cr, uid, ids, context=None):
