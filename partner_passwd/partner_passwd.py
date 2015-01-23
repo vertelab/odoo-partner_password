@@ -33,7 +33,7 @@ class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
 
-    service    = fields.Many2one('res.partner.service')
+    service    = fields.Many2one('res.partner.service', readonly=True, states={'draft': [('readonly', False)]})
     name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})
     passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]})
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
