@@ -17,7 +17,7 @@
 							  <button name="send_passwd" icon="terp-mail-" states="draft" string="Send password" type="object" class="oe_highlight"/>
 							  <button name="edit_passwd" icon="gtk-edit" states="sent" string="Edit password" type="object" class="oe_highlight"/>
 							  <button name="cancel_passwd" icon="gtk-delete" states="sent" string="Cancel password" type="object" class="oe_highlight"/>
-							  <button name="regenerate_passwd" icon="terp-mail-" states="draft" string="Regenerate password" type="object" class="oe_highlight"/>
+							  <button name="generate_passwd" icon="terp-mail-" states="draft" string="Generate password" type="object" class="oe_highlight"/>
 
 							</tree>
 						</field>

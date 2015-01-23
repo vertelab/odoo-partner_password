@@ -59,8 +59,8 @@ class res_partner_passwd(models.Model):
         return password
             
     @api.one
-#   regenerate a new password:    
-    def regenerate_passwd(self)
+#   generate a new password:    
+    def generate_passwd(self):
         self.passwd=self.pw_Gen()
         return True
 
