@@ -34,20 +34,26 @@ import random
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
-    
-    def pwGen():
-        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#¤%&/()=?`¡@£$€¥{[]}\±"
-        pw_length = 8
+
+    def pw_Gen(self):
+        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#¤%&/()=?`¡@£$¥{[]}\\±~^*+-"
         password = ""
+        pw_length = 15
         random.seed()
         for i in range(pw_length):
             next_index = random.randrange(len(alphabet))
-            password += alphabet[next_index]
+            password = password + alphabet[next_index]
         return password
+            
+    @api.one
+#   regenerate a new password:    
+    def regenerate_passwd(self):
+        self.passwd=self.pw_Gen()
+        return True
         
     def passwdGen():
-        passwords = (PasswordGenerator().of().between(4, 10, 'letters')
-                                     .at_least(4, 'numbers')
+        passwords = (PasswordGenerator().of().at_least(2, 'letters')
+                                     .at_least(2, 'numbers')
                                      .length(8)
                                      .beginning_with('letters')
                                      .done())
@@ -55,7 +61,7 @@ class res_partner_passwd(models.Model):
 
     service    = fields.Many2one('res.partner.service')
     name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})  
-    passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]}, default = passwdGen())
+    passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]})
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
                     help=" * The 'Draft' status is used when the password is editable.\n"
@@ -63,7 +69,6 @@ class res_partner_passwd(models.Model):
                          " * The'Cancelled'status is used when the password has been cancelled.\n")
     partner_id = fields.Many2one('res.partner')
     
-
     @api.one
 #    def send_passwd(self, cr, uid, ids, context=None):
     def send_passwd(self):
@@ -92,6 +97,8 @@ class res_partner_passwd(models.Model):
             'target': 'new',
             'context': ctx,
         }
+        
+
 
     @api.one
     def edit_passwd(self):
