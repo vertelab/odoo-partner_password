@@ -20,21 +20,34 @@
 ##############################################################################
 
 import itertools
+from openerp import SUPERUSER_ID
 from lxml import etree
-from grampg import PasswordGenerator
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
 import random
+from Crypto.Cipher import AES
+from Crypto import Random
 
 
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
 
+    def encrypt(self, cleartext, key):          #key = uuid
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(key, AES.MODE_CFB, iv)
+        msg = iv + cipher.encrypt(cleartext)
+        return msg.encode("hex")
+
+    def decrypt(self, ciphertext, key):
+        cipher=AES.new(key, AES.MODE_CFB, ciphertext.decode("hex")[:AES.block_size])
+        return cipher.decrypt(ciphertext.decode("hex"))[AES.block_size:]
     def pw_Gen(self):
         alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#¤%&/()=?`¡@£$¥{[]}\\±~^*+-"
         password = ""
@@ -50,14 +63,6 @@ class res_partner_passwd(models.Model):
     def regenerate_passwd(self):
         self.passwd=self.pw_Gen()
         return True
-        
-    def passwdGen():
-        passwords = (PasswordGenerator().of().at_least(2, 'letters')
-                                     .at_least(2, 'numbers')
-                                     .length(8)
-                                     .beginning_with('letters')
-                                     .done())
-        return passwords.generate()
 
     service    = fields.Many2one('res.partner.service', readonly=True, states={'draft': [('readonly', False)]})
     name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})  
@@ -68,7 +73,7 @@ class res_partner_passwd(models.Model):
                          " * The 'Sent' status is used when the password has been sent to the user.\n"
                          " * The'Cancelled'status is used when the password has been cancelled.\n")
     partner_id = fields.Many2one('res.partner')
-    
+
     @api.one
 #    def send_passwd(self, cr, uid, ids, context=None):
     def send_passwd(self):
@@ -85,6 +90,7 @@ class res_partner_passwd(models.Model):
             default_composition_mode='comment',
             mark_invoice_as_sent=True,
         )
+        self.passwd=self.encrypt(self.passwd, self.pool['ir.config_parameter'].get_param(self.env.cr, SUPERUSER_ID, 'database.uuid').replace('-', ''))
         self.state='sent'
         return {
             'name': _('Compose Email'),
@@ -103,12 +109,17 @@ class res_partner_passwd(models.Model):
     @api.one
     def edit_passwd(self):
         self.state='draft'
+        self.passwd=self.decrypt(self.passwd, self.pool['ir.config_parameter'].get_param(self.env.cr, SUPERUSER_ID, 'database.uuid').replace('-', ''))
         return True
 
     @api.one
     def cancel_passwd(self):
         self.state='cancel'
         return True
+
+    #@api.one
+    #def read(self,cr,uid, *args, **kwargs):
+    #    return super(res_partner_passwd, self).read(cr,uid, *args, **kwargs)
 
 class res_partner(models.Model):
     _inherit = "res.partner"
