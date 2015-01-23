@@ -48,10 +48,10 @@ class res_partner_passwd(models.Model):
     def decrypt(self, ciphertext, key):
         cipher=AES.new(key, AES.MODE_CFB, ciphertext.decode("hex")[:AES.block_size])
         return cipher.decrypt(ciphertext.decode("hex"))[AES.block_size:]
-    def pw_Gen(self):
-        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#¤%&/()=?`¡@£$¥{[]}\\±~^*+-"
+
+    def pw_Gen(self, pw_length = 15):
+        alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./0:;<=>?@[\]^_`{|}~"
         password = ""
-        pw_length = 15
         random.seed()
         for i in range(pw_length):
             next_index = random.randrange(len(alphabet))
@@ -60,7 +60,7 @@ class res_partner_passwd(models.Model):
             
     @api.one
 #   regenerate a new password:    
-    def regenerate_passwd(self):
+    def regenerate_passwd(self)
         self.passwd=self.pw_Gen()
         return True
 
