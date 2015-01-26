@@ -29,16 +29,16 @@ import openerp.addons.decimal_precision as dp
 import random
 
 import logging
-
+_logger = logging.getLogger(__name__)
 #Message appear if Crypto.Cipher is not installed
 try:
     from Crypto.Cipher import AES
     from Crypto import Random
 except ImportError:
-    sys.exit("""You need Crypto.Cipher!
+    _logger.info("""You need Crypto.Cipher!
                 install it by using the commando: apt-get install python-crypto """)
 
-_logger = logging.getLogger(__name__)
+
 
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
