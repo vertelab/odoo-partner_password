@@ -27,9 +27,16 @@ from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
 import random
-from Crypto.Cipher import AES
-from Crypto import Random
+
 import logging
+
+#Message appear if Crypto.Cipher is not installed
+try:
+    from Crypto.Cipher import AES
+    from Crypto import Random
+except ImportError:
+    sys.exit("""You need Crypto.Cipher!
+                install it by using the commando: apt-get install python-crypto """)
 
 _logger = logging.getLogger(__name__)
 
