@@ -29,8 +29,6 @@ import openerp.addons.decimal_precision as dp
 import random
 from Crypto.Cipher import AES
 from Crypto import Random
-
-
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -39,15 +37,19 @@ class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
 
-    def encrypt(self, cleartext, key):          #key = uuid
+    def _encrypt(self, cleartext, key):          #key = uuid
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(key, AES.MODE_CFB, iv)
         msg = iv + cipher.encrypt(cleartext)
         return msg.encode("hex")
 
-    def decrypt(self, ciphertext, key):
+    def _decrypt(self, ciphertext, key):
         cipher=AES.new(key, AES.MODE_CFB, ciphertext.decode("hex")[:AES.block_size])
         return cipher.decrypt(ciphertext.decode("hex"))[AES.block_size:]
+
+    def _get_key(self):
+        return '0769382aa0a111e48be990489ab8facf'
+        #return self.pool['ir.config_parameter'].get_param(self.env.cr, SUPERUSER_ID, 'database.uuid').replace('-', '')
 
     def pw_Gen(self, pw_length = 15):
         alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./0:;<=>?@[\]^_`{|}~"
@@ -90,7 +92,6 @@ class res_partner_passwd(models.Model):
             default_composition_mode='comment',
             mark_invoice_as_sent=True,
         )
-        self.passwd=self.encrypt(self.passwd, self.pool['ir.config_parameter'].get_param(self.env.cr, SUPERUSER_ID, 'database.uuid').replace('-', ''))
         self.state='sent'
         return {
             'name': _('Compose Email'),
@@ -103,13 +104,10 @@ class res_partner_passwd(models.Model):
             'target': 'new',
             'context': ctx,
         }
-        
-
 
     @api.one
     def edit_passwd(self):
         self.state='draft'
-        self.passwd=self.decrypt(self.passwd, self.pool['ir.config_parameter'].get_param(self.env.cr, SUPERUSER_ID, 'database.uuid').replace('-', ''))
         return True
 
     @api.one
@@ -117,9 +115,41 @@ class res_partner_passwd(models.Model):
         self.state='cancel'
         return True
 
-    #@api.one
-    #def read(self,cr,uid, *args, **kwargs):
-    #    return super(res_partner_passwd, self).read(cr,uid, *args, **kwargs)
+    @api.v7
+    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+        result = super(res_partner_passwd, self).read(cr, user, ids, fields, context, load)
+        for record in result:
+            if 'passwd' in record:
+                _logger.info('reading password 7 encrypted |%s|' % record['passwd'])
+                record['passwd'] = self._decrypt(record['passwd'], self._get_key())
+                _logger.info('reading password 7 cleartext |%s|' % record['passwd'])
+        return result
+
+
+    @api.v8
+    def read(self, fields=None, load='_classic_read'):      #untested
+        result = super(res_partner_passwd, self).read(fields, load)
+        for record in result:
+            if 'passwd' in record:
+                _logger.info('reading password 8 encrypted |%s|' % record['passwd'])
+                record['passwd'] = self._decrypt(record['passwd'], self._get_key())
+                _logger.info('reading password 8 cleartext |%s|' % record['passwd'])
+        return result
+
+    @api.model
+    @api.returns('self', lambda value: value.id)
+    def create(self, vals):
+        if 'passwd' in vals:
+            vals['passwd'] = self._encrypt(vals['passwd'], self._get_key())
+            _logger.info('creating password |%s|' % vals['passwd'])
+        return super(res_partner_passwd, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        if 'passwd' in vals:
+            vals['passwd'] = self._encrypt(vals['passwd'], self._get_key())
+            _logger.info('writing password |%s|' % vals['passwd'])
+        return super(res_partner_passwd, self).write(vals)
 
 class res_partner(models.Model):
     _inherit = "res.partner"
