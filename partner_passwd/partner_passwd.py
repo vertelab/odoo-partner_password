@@ -51,7 +51,7 @@ class res_partner_passwd(models.Model):
         return msg.encode("hex")
 
     def _decrypt(self, ciphertext, key):
-        cipher=AES.new(key, AES.MODE_CFB, ciphertext.decode("hex")[:AES.block_size])
+        cipher=AES.new(key, AES.MODE_CFB, ciphertext.decode("hex")[:AES.block_size]) #if error install crypto
         return cipher.decrypt(ciphertext.decode("hex"))[AES.block_size:]
 
     def _get_key(self):
