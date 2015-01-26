@@ -121,7 +121,10 @@ class res_partner_passwd(models.Model):
         for record in result:
             if 'passwd' in record:
                 _logger.info('reading password 7 encrypted |%s|' % record['passwd'])
-                record['passwd'] = self._decrypt(record['passwd'], self._get_key())
+                try:
+                    record['passwd'] = self._decrypt(record['passwd'], self._get_key())
+                except TypeError:
+                    pass
                 _logger.info('reading password 7 cleartext |%s|' % record['passwd'])
         return result
 
