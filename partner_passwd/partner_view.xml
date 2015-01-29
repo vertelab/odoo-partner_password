@@ -15,7 +15,10 @@
 							  <field name="name"/>
 							  <field name="state" invisible="1"/>
 							  <field name="passwd"/>
-							  <button name="send_passwd" icon="terp-mail-" states="draft" string="Send password" type="object" class="oe_highlight"/>
+							  <button name="%(mail.action_email_compose_message_wizard)d"
+                                string="Send Email" type="action" icon="terp-mail-message-new"/>
+			  <!--			  <button name="send_passwd" icon="terp-mail-" states="draft" string="Send password" type="object" class="oe_highlight"/> -->
+<!--här är den ikon som inte funkar--><button name="open_mailform" icon="terp-mail-" string="Send mail" type="object" class="oe_highlight"/>
 							  <button name="edit_passwd" icon="gtk-edit" states="sent" string="Edit password" type="object" class="oe_highlight"/>
 							  <button name="cancel_passwd" icon="gtk-delete" states="sent" string="Cancel password" type="object" class="oe_highlight"/>
 							  <button name="generate_passwd" icon="gtk-refresh" states="draft" string="Generate password" type="object" class="oe_highlight"/>

@@ -92,12 +92,12 @@ class res_partner_passwd(models.Model):
         template = self.env.ref('account.email_template_edi_invoice', False)
         compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
         ctx = dict(
-            default_model='account.invoice',        #res.partner
+            default_model='res.partner',        #res.partner
             default_res_id=self.id,
             default_use_template=bool(template),
-            default_template_id=template.id,
+            #default_template_id=template.id,
             default_composition_mode='comment',
-            mark_invoice_as_sent=True,
+            #mark_invoice_as_sent=True,
         )
         self.state='sent'
         return {
@@ -111,6 +111,48 @@ class res_partner_passwd(models.Model):
             'target': 'new',
             'context': ctx,
         }
+        
+    @api.one
+    @api.returns('ir.ui.view')
+    def open_mailform(self):
+        """ Update form view id of action to open the invoice """
+        return self.env.ref('base.view_partner_form')
+    
+        
+    @api.one
+    @api.returns('ir.actions.act_window')
+    def xopen_mailform(self):
+        """ Sends the password to the users mail.
+        """        
+     
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+#            'type': 'ir.actions.client',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'res.partner',
+            'view_id': self.env.ref('base.view_partner_form'),
+
+            #'views': [(compose_form.id, 'form')],
+            #'view_id': self.env.ref('mail.email_compose_message_wizard_form'),
+            'res_id': self.id,
+            'target': 'new',
+            
+        }
+     
+        #return {
+            #'name': _('Compose Email'),
+            #'type': 'ir.actions.act_window',
+##            'type': 'ir.actions.client',
+            #'view_type': 'form',
+            #'view_mode': 'form',
+            #'res_model': 'mail.compose.message',
+            ##'views': [(compose_form.id, 'form')],
+            #'view_id': self.env.ref('mail.email_compose_message_wizard_form'),
+            #'target': 'new',
+            
+        #}
 
     @api.one
     def edit_passwd(self):
