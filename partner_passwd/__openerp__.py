@@ -22,11 +22,13 @@
 
 
 {
-    'name': 'partner_passwd',
+    'name': 'Password Manager',
     'version': '0.1',
     'category': 'Sales',
     'description': """
-Adding passwords to partners.
+Adds a tab for managing passwords to Customers. Passwords are
+automaticly encrypted before being written to the database, and
+decrypted when read.
 ===================================================
 """,
     'author': 'Vertel AB',
