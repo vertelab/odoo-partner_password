@@ -1,0 +1,29 @@
+<openerp>
+	<data><!--  Partners inherited form -->
+		<record id="view_password_partner_form" model="ir.ui.view">
+			<field name="name">res.partner.passwd.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="priority" eval="50"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<!-- Passwords can be seen by groups-->
+					<page name="passwd" string="Passwords" groups="base.group_erp_manager">
+					  <field name="passwd_ids" colspan="4" nolabel="1" widget="one2many_list" groups="base.group_erp_manager">
+						  <tree string="Passwords" editable="bottom">
+							  <field name="service"/>
+							  <field name="name"/>
+							  <field name="state" invisible="1"/>
+							  <field name="passwd"/>
+							  <button name="send_passwd" icon="terp-mail-" states="draft" string="Send password" type="object" class="oe_highlight"/>
+							  <button name="edit_passwd" icon="gtk-edit" states="sent" string="Edit password" type="object" class="oe_highlight"/>
+							  <button name="cancel_passwd" icon="gtk-delete" states="sent" string="Cancel password" type="object" class="oe_highlight"/>
+							  <button name="generate_passwd" icon="gtk-refresh" states="draft" string="Generate password" type="object" class="oe_highlight"/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+			</field>
+		</record>
+	</data>
+</openerp>

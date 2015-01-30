@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_passwd
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150128\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-30 10:18+0000\n"
+"PO-Revision-Date: 2015-01-30 10:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_passwd
+#: help:res.partner.passwd,state:0
+msgid " * The 'Draft' status is used when the password is editable.\n"
+" * The 'Sent' status is used when the password has been sent to the user.\n"
+" * The'Cancelled'status is used when the password has been cancelled.\n"
+""
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Cancel password"
+msgstr ""
+
+#. module: partner_passwd
+#: selection:res.partner.passwd,state:0
+msgid "Cancelled"
+msgstr ""
+
+#. module: partner_passwd
+#: code:addons/partner_passwd/partner_passwd.py:104
+#: code:addons/partner_passwd/partner_passwd.py:129
+#, python-format
+msgid "Compose Email"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,create_uid:0
+#: field:res.partner.service,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,create_date:0
+#: field:res.partner.service,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: partner_passwd
+#: selection:res.partner.passwd,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Edit password"
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Generate password"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,id:0
+#: field:res.partner.service,id:0
+msgid "ID"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,write_uid:0
+#: field:res.partner.service,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,write_date:0
+#: field:res.partner.service,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,name:0
+#: field:res.partner.service,name:0
+msgid "Name"
+msgstr ""
+
+#. module: partner_passwd
+#: model:ir.model,name:partner_passwd.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,partner_id:0
+msgid "Partner id"
+msgstr ""
+
+#. module: partner_passwd
+#: model:ir.model,name:partner_passwd.model_res_partner_passwd
+#: field:res.partner,passwd_ids:0
+#: field:res.partner.passwd,passwd:0
+msgid "Password"
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Passwords"
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Send Email"
+msgstr ""
+
+#. module: partner_passwd
+#: view:res.partner:partner_passwd.view_password_partner_form
+msgid "Send mail"
+msgstr ""
+
+#. module: partner_passwd
+#: selection:res.partner.passwd,state:0
+msgid "Sent"
+msgstr ""
+
+#. module: partner_passwd
+#: model:ir.model,name:partner_passwd.model_res_partner_service
+#: field:res.partner.passwd,service:0
+msgid "Service"
+msgstr ""
+
+#. module: partner_passwd
+#: field:res.partner.passwd,state:0
+msgid "Status"
+msgstr ""
+

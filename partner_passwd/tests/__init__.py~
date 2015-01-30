@@ -1,0 +1,2 @@
+from . import test_partner_passwd
+from . import test_partner_service

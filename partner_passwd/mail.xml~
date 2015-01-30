@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_password_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.passwd.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="" position="after">
+                <button name="pic_url" states="confirmed" string="图例一" type="object"/>
+                <button name="info_url" states="confirmed" string="图例二" type="object"/>
+            </xpath>
+        </field>
+    </record>                
+</data>
+</openerp>
