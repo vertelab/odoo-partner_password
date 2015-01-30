@@ -1,3 +1,5 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 res_partner_passwd,partner password manager,model_res_partner_passwd,base.group_erp_manager,1,1,1,1
 res_partner_passwd_salesman,partner password salesman,model_res_partner_passwd,base.group_sale_salesman,1,0,0,0
+res_partner_passwd_service,partner password manager,model_res_partner_service,base.group_erp_manager,1,1,1,1
+res_partner_passwd_service_salesman,partner password salesman,model_res_partner_service,base.group_sale_salesman,1,0,0,0
