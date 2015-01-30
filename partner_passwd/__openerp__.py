@@ -33,7 +33,7 @@ decrypted when read.
 """,
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
     'data': ['partner_view.xml',
     'security/ir.model.access.csv',
     ],
