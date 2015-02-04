@@ -15,8 +15,7 @@
 							  <field name="name"/>
 							  <field name="state" invisible="1"/>
 							  <field name="passwd"/>
-							  <button name="%(mail.action_email_compose_message_wizard)d"
-                                string="Send Email" type="action" icon="terp-mail-message-new"/>
+							  <button name="send_passwd" string="Send Email" type="object" icon="terp-mail-message-new"/>
 			  <!--			  <button name="send_passwd" icon="terp-mail-" states="draft" string="Send password" type="object" class="oe_highlight"/> -->
 <!--här är den ikon som inte funkar--><button name="open_mailform" icon="terp-mail-" string="Send mail" type="object" class="oe_highlight"/>
 							  <button name="edit_passwd" icon="gtk-edit" states="sent" string="Edit password" type="object" class="oe_highlight"/>
@@ -28,5 +27,23 @@
 				</notebook>
 			</field>
 		</record>
+		
+		<record id="email_template_id" model="email.template">
+            <field name="name">Email template for password</field>
+            <field name="email_from">${object.name.email or ''}</field>
+            <field name="subject"> ${object.date or ''}</field>
+            <field name="model_id" ref="password_manager.model_res_partner_passwd"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_to">${object.name.email or ''}</field>
+            <field name="body_html">
+                <![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 16px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                <p>Name: ${object.name}</p>   <p>Date: ${object.date}</p> <br/>
+                <p style="color:blue"><font-size="14">Your password is:</font></p>
+                    ${object.passwd}    <br/><br/>
+                </div>
+                ]]>
+            </field>
+        </record> 
 	</data>
 </openerp>

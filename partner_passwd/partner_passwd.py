@@ -44,6 +44,7 @@ except ImportError:
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     def _encrypt(self, cleartext, key):          #key = uuid
         iv = Random.new().read(AES.block_size)
@@ -76,15 +77,9 @@ class res_partner_passwd(models.Model):
         self.passwd=self.pw_Gen()
         return True
 
-<<<<<<< HEAD
     service    = fields.Many2one('res.partner.service', readonly=True, states={'draft': [('readonly', False)]})
     name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})  
     passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]}, default=pw_Gen)
-=======
-    service    = fields.Many2one('res.partner.service', readonly=True, states={'draft': [('readonly', False)]}, required=True)
-    name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]}, required=True)
-    passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]}, default = pw_Gen, required=True)
->>>>>>> 040047723091c43efbde67d8b5a652259e8c83de
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
                     help=" * The 'Draft' status is used when the password is editable.\n"
@@ -92,18 +87,18 @@ class res_partner_passwd(models.Model):
                          " * The'Cancelled'status is used when the password has been cancelled.\n")
     partner_id = fields.Many2one('res.partner')
 
-    @api.one
+    @api.multi
     def send_passwd(self):
         """ Sends the password to the users mail.
         """        
         assert len(self) == 1, 'This option should only be used for a single id at a time.'
-        template = self.env.ref('account.email_template_edi_invoice', False)
+        template = self.env.ref('password_manager.email_template_id', False)
         compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
         ctx = dict(
             default_model='res.partner.passwd',
             default_res_id=self.id,
             default_use_template=bool(template),
-            #default_template_id=template.id,
+            default_template_id=template.id,
             default_composition_mode='comment',
             #mark_invoice_as_sent=True,
         )
@@ -217,7 +212,6 @@ class res_partner_passwd(models.Model):
 
 class res_partner(models.Model):
     _inherit = "res.partner"
-
     passwd_ids = fields.Many2many('res.partner.passwd','res_partner_passwd_rel','partner_id','passwd_id', string='Password', groups="base.group_erp_manager",)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
