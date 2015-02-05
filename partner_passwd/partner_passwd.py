@@ -38,9 +38,6 @@ except ImportError:
     _logger.info("""You need Crypto.Cipher!
                 install it by using the commando: apt-get install python-crypto """)
 
-
-
-
 class res_partner_passwd(models.Model):
     _name = "res.partner.passwd"
     _description = "Password"
@@ -92,7 +89,7 @@ class res_partner_passwd(models.Model):
         """ Sends the password to the users mail.
         """        
         assert len(self) == 1, 'This option should only be used for a single id at a time.'
-        template = self.env.ref('password_manager.email_template_id', False)
+        template = self.env.ref('partner_passwd.email_template_id', False)
         compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
         ctx = dict(
             default_model='res.partner.passwd',
@@ -121,13 +118,12 @@ class res_partner_passwd(models.Model):
         """ Update form view id of action to open the invoice """
         return self.env.ref('base.view_partner_form')
     
-        
     @api.one
     @api.returns('ir.actions.act_window')
     def xopen_mailform(self):
         """ Sends the password to the users mail.
         """        
-     
+        
         return {
             'name': _('Compose Email'),
             'type': 'ir.actions.act_window',
