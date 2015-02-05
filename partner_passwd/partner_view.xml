@@ -28,7 +28,7 @@
 			</field>
 		</record>
 		
-		<record id="email_template_id" model="email.template">
+	<record id="email_template_id" model="email.template">
             <field name="name">Email template for password</field>
             <field name="email_from">${object.name.email or ''}</field>
             <field name="subject"> ${object.date or ''}</field>
