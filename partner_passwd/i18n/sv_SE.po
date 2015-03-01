@@ -28,19 +28,19 @@ msgstr ""
 #. module: partner_passwd
 #: view:res.partner:partner_passwd.view_password_partner_form
 msgid "Cancel password"
-msgstr "Avboka lösenordet"
+msgstr "Inaktivera lösenordet"
 
 #. module: partner_passwd
 #: selection:res.partner.passwd,state:0
 msgid "Cancelled"
-msgstr "Avbokad"
+msgstr "Inaktiverad"
 
 #. module: partner_passwd
 #: code:addons/partner_passwd/partner_passwd.py:104
 #: code:addons/partner_passwd/partner_passwd.py:129
 #, python-format
 msgid "Compose Email"
-msgstr "Skriva e-post"
+msgstr "Författa e-postmeddelande"
 
 #. module: partner_passwd
 #: field:res.partner.passwd,create_uid:0
@@ -52,7 +52,7 @@ msgstr "Skapad av"
 #: field:res.partner.passwd,create_date:0
 #: field:res.partner.service,create_date:0
 msgid "Created on"
-msgstr "Skapad på"
+msgstr "Skapad"
 
 #. module: partner_passwd
 #: selection:res.partner.passwd,state:0
@@ -83,7 +83,7 @@ msgstr "Senast uppdaterad av"
 #: field:res.partner.passwd,write_date:0
 #: field:res.partner.service,write_date:0
 msgid "Last Updated on"
-msgstr "Senast uppdaterad på"
+msgstr "Senast uppdaterad"
 
 #. module: partner_passwd
 #: field:res.partner.passwd,name:0 field:res.partner.service,name:0
@@ -93,12 +93,12 @@ msgstr "Namn"
 #. module: partner_passwd
 #: model:ir.model,name:partner_passwd.model_res_partner
 msgid "Partner"
-msgstr "Partner"
+msgstr "Kontakt"
 
 #. module: partner_passwd
 #: field:res.partner.passwd,partner_id:0
 msgid "Partner id"
-msgstr "Partner id"
+msgstr "Kontakt id"
 
 #. module: partner_passwd
 #: model:ir.model,name:partner_passwd.model_res_partner_passwd
@@ -109,7 +109,7 @@ msgstr "Lösenord"
 #. module: partner_passwd
 #: view:res.partner:partner_passwd.view_password_partner_form
 msgid "Passwords"
-msgstr "Lösenorden"
+msgstr "Lösenord"
 
 #. module: partner_passwd
 #: view:res.partner:partner_passwd.view_password_partner_form
@@ -119,7 +119,7 @@ msgstr "Skicka e-post"
 #. module: partner_passwd
 #: view:res.partner:partner_passwd.view_password_partner_form
 msgid "Send mail"
-msgstr "Skicka post"
+msgstr "Skicka e-post"
 
 #. module: partner_passwd
 #: selection:res.partner.passwd,state:0
@@ -130,7 +130,7 @@ msgstr "Skickat"
 #: model:ir.model,name:partner_passwd.model_res_partner_service
 #: field:res.partner.passwd,service:0
 msgid "Service"
-msgstr "Service"
+msgstr "Tjänst"
 
 #. module: partner_passwd
 #: field:res.partner.passwd,state:0
