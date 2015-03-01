@@ -37,7 +37,9 @@ decrypted when read.
     'data': ['partner_view.xml',
     'security/ir.model.access.csv',
     ],
-
+    'external_dependencies': {
+        'python' : ['crypto'],
+    },
     'installable': True,
     
 }
