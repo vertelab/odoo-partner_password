@@ -22,7 +22,7 @@
 
 {
     'name': 'Password Manager',
-    'version': '0.1',
+    'version': '8.0.1.0.0',
     'category': 'Sales',
     'description': """
 Adds a tab for managing passwords to Customers. Passwords are
@@ -40,6 +40,6 @@ decrypted when read.
         'python' : ['crypto'],
     },
     'installable': True,
-    
+
 }
 # vim:expandtab:smartindent:tabstop=4s:softtabstop=4:shiftwidth=4:
