@@ -67,15 +67,15 @@ class res_partner_passwd(models.Model):
             next_index = random.randrange(len(alphabet))
             password = password + alphabet[next_index]
         return password
-            
+
     @api.one
-#   generate a new password:    
+#   generate a new password:
     def generate_passwd(self):
         self.passwd=self.pw_Gen()
         return True
 
     service    = fields.Many2one('res.partner.service', readonly=True, states={'draft': [('readonly', False)]})
-    name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})  
+    name       = fields.Char(string='Name', index=True, readonly=True, states={'draft': [('readonly', False)]})
     passwd     = fields.Char(string='Password', index=True, readonly=True, states={'draft': [('readonly', False)]}, default=pw_Gen)
     state      = fields.Selection([('draft','Draft'),('sent','Sent'),('cancel','Cancelled'),], string='Status', index=True, readonly=True, default='draft',
                     track_visibility='onchange', copy=False,
@@ -87,7 +87,7 @@ class res_partner_passwd(models.Model):
     @api.multi
     def send_passwd(self):
         """ Sends the password to the users mail.
-        """        
+        """
         assert len(self) == 1, 'This option should only be used for a single id at a time.'
         template = self.env.ref('partner_passwd.email_template_id', False)
         compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
@@ -111,19 +111,19 @@ class res_partner_passwd(models.Model):
             'target': 'new',
             'context': ctx,
         }
-        
+
     @api.one
     @api.returns('ir.ui.view')
     def open_mailform(self):
         """ Update form view id of action to open the invoice """
         return self.env.ref('base.view_partner_form')
-    
+
     @api.one
     @api.returns('ir.actions.act_window')
     def xopen_mailform(self):
         """ Sends the password to the users mail.
-        """        
-        
+        """
+
         return {
             'name': _('Compose Email'),
             'type': 'ir.actions.act_window',
@@ -137,9 +137,9 @@ class res_partner_passwd(models.Model):
             #'view_id': self.env.ref('mail.email_compose_message_wizard_form'),
             'res_id': self.id,
             'target': 'new',
-            
+
         }
-     
+
         #return {
             #'name': _('Compose Email'),
             #'type': 'ir.actions.act_window',
@@ -150,7 +150,7 @@ class res_partner_passwd(models.Model):
             ##'views': [(compose_form.id, 'form')],
             #'view_id': self.env.ref('mail.email_compose_message_wizard_form'),
             #'target': 'new',
-            
+
         #}
 
     @api.one
@@ -162,7 +162,7 @@ class res_partner_passwd(models.Model):
     def cancel_passwd(self):
         self.state='cancel'
         return True
-    
+
 
     @api.v7
     def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
@@ -208,6 +208,6 @@ class res_partner_passwd(models.Model):
 
 class res_partner(models.Model):
     _inherit = "res.partner"
-    passwd_ids = fields.Many2many('res.partner.passwd','res_partner_passwd_rel','partner_id','passwd_id', string='Password', groups="base.group_erp_manager",)
+    passwd_ids = fields.One2many('res.partner.passwd', 'partner_id', string='Password', groups="base.group_erp_manager")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
