@@ -31,6 +31,7 @@ decrypted when read.
 ===================================================
 """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['base', 'mail'],
     'data': ['partner_view.xml',
