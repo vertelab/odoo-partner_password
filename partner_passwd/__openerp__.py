@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # OpenERP, Open Source Management Solution, third party addon
-# Copyright (C) 2004-2015 Vertel AB (<http://vertel.se>).
+# Copyright (C) 2004-2015 Vertel Sverige AB (<http://vertel.se>).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -22,7 +22,7 @@
 
 {
     'name': 'Password Manager',
-    'version': '8.0.1.0.0',
+    'version': "18.0.1.0.0",
     'category': 'Sales',
     'description': """
 Adds a tab for managing passwords to Customers. Passwords are
@@ -30,7 +30,7 @@ automaticly encrypted before being written to the database, and
 decrypted when read.
 ===================================================
 """,
-    'author': 'Vertel AB',
+    'author': 'Vertel Sverige AB',
     'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['base', 'mail'],
